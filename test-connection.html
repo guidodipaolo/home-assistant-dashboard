@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test de Conexión Home Assistant</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #1a1a1a;
+        color: white;
+      }
+      .test-result {
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .success {
+        background: #2d5a2d;
+        border: 1px solid #4a7c4a;
+      }
+      .error {
+        background: #5a2d2d;
+        border: 1px solid #7c4a4a;
+      }
+      button {
+        background: #4a7c4a;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 5px;
+      }
+      button:hover {
+        background: #5a8c5a;
+      }
+      pre {
+        background: #2a2a2a;
+        padding: 10px;
+        border-radius: 5px;
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🧪 Test de Conexión Home Assistant</h1>
+
+    <div>
+      <button onclick="testConnection()">Probar Conexión</button>
+      <button onclick="clearCache()">Limpiar Caché</button>
+    </div>
+
+    <div id="results"></div>
+
+    <script>
+      const HA_URL = "https://amador.freeddns.org";
+      const HA_TOKEN =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIwZDhhMDUwZGE3NmY0MGFjYmM3M2I5YzNhNDBiNjZmMCIsImlhdCI6MTc1ODM4NjI5NiwiZXhwIjoyMDczNzQ2Mjk2fQ.4XIvvhJu0W9tB6kXDtbroDccVHjxHQEXK0kZlQKwlAY";
+
+      function addResult(message, isSuccess = true) {
+        const resultsDiv = document.getElementById("results");
+        const resultDiv = document.createElement("div");
+        resultDiv.className = `test-result ${isSuccess ? "success" : "error"}`;
+        resultDiv.innerHTML = message;
+        resultsDiv.appendChild(resultDiv);
+      }
+
+      function clearCache() {
+        if ("caches" in window) {
+          caches.keys().then(function (names) {
+            for (let name of names) {
+              caches.delete(name);
+            }
+          });
+        }
+        addResult("✅ Caché limpiada");
+      }
+
+      async function testConnection() {
+        document.getElementById("results").innerHTML = "";
+
+        addResult("🔄 Iniciando test de conexión...");
+
+        try {
+          // Test 1: OPTIONS request (preflight)
+          addResult("🔄 Probando petición OPTIONS (preflight)...");
+
+          const optionsResponse = await fetch(`${HA_URL}/api/states`, {
+            method: "OPTIONS",
+            headers: {
+              Origin: "http://localhost:3000",
+              "Access-Control-Request-Method": "GET",
+              "Access-Control-Request-Headers": "Authorization",
+            },
+          });
+
+          if (optionsResponse.ok) {
+            addResult("✅ Petición OPTIONS exitosa");
+            addResult(
+              `📋 Headers CORS: ${JSON.stringify(
+                {
+                  "Access-Control-Allow-Origin": optionsResponse.headers.get(
+                    "Access-Control-Allow-Origin"
+                  ),
+                  "Access-Control-Allow-Methods": optionsResponse.headers.get(
+                    "Access-Control-Allow-Methods"
+                  ),
+                  "Access-Control-Allow-Headers": optionsResponse.headers.get(
+                    "Access-Control-Allow-Headers"
+                  ),
+                },
+                null,
+                2
+              )}`
+            );
+          } else {
+            addResult(
+              `❌ Petición OPTIONS falló: ${optionsResponse.status}`,
+              false
+            );
+          }
+
+          // Test 2: GET request
+          addResult("🔄 Probando petición GET...");
+
+          const getResponse = await fetch(
+            `${HA_URL}/api/states/sensor.cocina_termometro_temperature`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${HA_TOKEN}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (getResponse.ok) {
+            const data = await getResponse.json();
+            addResult("✅ Petición GET exitosa");
+            addResult(
+              `📊 Datos recibidos: <pre>${JSON.stringify(data, null, 2)}</pre>`
+            );
+          } else {
+            addResult(`❌ Petición GET falló: ${getResponse.status}`, false);
+          }
+        } catch (error) {
+          addResult(`❌ Error: ${error.message}`, false);
+          addResult(
+            `📋 Detalles del error: <pre>${JSON.stringify(
+              error,
+              null,
+              2
+            )}</pre>`,
+            false
+          );
+        }
+      }
+
+      // Auto-test al cargar la página
+      window.onload = function () {
+        setTimeout(testConnection, 1000);
+      };
+    </script>
+  </body>
+</html>

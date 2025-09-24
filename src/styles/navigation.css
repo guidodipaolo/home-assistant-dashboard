@@ -1,0 +1,137 @@
+/* Estilos para la barra de navegación flotante */
+
+/* Animaciones de transición de pantalla */
+.screen-container {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding-bottom: 60px; /* Espacio reducido para la barra de navegación */
+  min-height: calc(100vh - 60px);
+  box-sizing: border-box;
+}
+
+.screen-container.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.screen-container.fade-out {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.floating-navigation {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 8px 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  max-width: calc(100vw - 40px);
+  overflow-x: auto;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 48px;
+  min-height: 48px;
+  position: relative;
+  transform: scale(1);
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+}
+
+.nav-item.active {
+  background: rgba(14, 165, 233, 0.15);
+  transform: scale(1.1);
+  box-shadow: 0 4px 20px rgba(14, 165, 233, 0.2);
+}
+
+.nav-item.active .nav-icon {
+  color: #0ea5e9;
+  transform: scale(1.1);
+}
+
+.nav-item:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1);
+}
+
+.nav-label {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .screen-container {
+    padding-bottom: 50px; /* Menos espacio en tablets */
+  }
+
+  .floating-navigation {
+    bottom: 16px;
+    padding: 6px 12px;
+    gap: 2px;
+  }
+
+  .nav-item {
+    padding: 10px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .nav-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .screen-container {
+    padding-bottom: 45px; /* Aún menos espacio en móviles */
+  }
+
+  .floating-navigation {
+    bottom: 12px;
+    padding: 4px 8px;
+    gap: 1px;
+  }
+
+  .nav-item {
+    padding: 8px;
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  .nav-icon {
+    width: 16px;
+    height: 16px;
+  }
+}

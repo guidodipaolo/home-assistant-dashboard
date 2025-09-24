@@ -1,0 +1,439 @@
+/* Estilos para la sección de cuartos */
+
+.rooms-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  width: 100%;
+}
+
+.room-card {
+  background: var(--bg-glass);
+  backdrop-filter: var(--blur-lg);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-xl);
+  transition: var(--transition-normal);
+  width: 100%;
+}
+
+.room-header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+}
+
+.room-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+.room-info {
+  flex: 1;
+}
+
+.room-name {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+}
+
+.room-metrics {
+  display: flex;
+  gap: var(--spacing-xl);
+  align-items: center;
+}
+
+.room-metric {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.room-metric .metric-value {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.room-devices {
+  color: var(--text-secondary);
+  font-size: 14px;
+  text-align: right;
+  align-self: center;
+}
+
+/* Estilos para métricas de temperatura y humedad */
+.temp-humidity-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+}
+
+.metric-box {
+  background: var(--bg-secondary);
+  backdrop-filter: var(--blur-sm);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  border: 1px solid var(--border-secondary);
+}
+
+.metric-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.metric-icon {
+  width: var(--spacing-lg);
+  height: var(--spacing-lg);
+}
+
+.metric-label {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.metric-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Estilos para controles de media player */
+.media-content {
+  background: var(--bg-secondary);
+  backdrop-filter: var(--blur-sm);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  border: 1px solid var(--border-secondary);
+  margin-bottom: var(--spacing-lg);
+  min-height: 100px;
+}
+
+.media-label {
+  color: var(--text-secondary);
+  font-size: 12px;
+  margin-bottom: var(--spacing-xs);
+}
+
+.media-title {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.volume-icon {
+  color: var(--text-secondary);
+  width: 20px;
+  height: 20px;
+}
+
+.volume-slider {
+  flex: 1;
+}
+
+.volume-value {
+  color: var(--text-secondary);
+  font-size: 12px;
+  min-width: 32px;
+}
+
+/* Estilos para botones de control */
+.power-button {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-normal);
+}
+
+.power-button.on {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+.power-button.on:hover {
+  background: rgba(239, 68, 68, 0.3);
+}
+
+.power-button.off {
+  background: rgba(34, 197, 94, 0.2);
+}
+
+.power-button.off:hover {
+  background: rgba(34, 197, 94, 0.3);
+}
+
+/* Estilos para vacuum */
+.vacuum-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-lg);
+}
+
+.status-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.status-text {
+  font-size: 14px;
+}
+
+.status-text.docked {
+  color: rgba(156, 163, 175, 1);
+}
+.status-text.cleaning {
+  color: var(--color-success);
+}
+.status-text.paused {
+  color: var(--color-warning);
+}
+.status-text.returning {
+  color: var(--color-info);
+}
+
+.battery-info {
+  text-align: right;
+}
+
+.battery-label {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.battery-value {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.rooms-icons-line {
+  margin-bottom: var(--spacing-lg);
+}
+
+.rooms-label {
+  color: var(--text-secondary);
+  font-size: 12px;
+  margin-bottom: var(--spacing-md);
+}
+
+.rooms-icons-container {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.room-icon-item {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  color: var(--text-secondary);
+}
+
+.room-icon-item.selected {
+  background: rgba(59, 130, 246, 0.3);
+  color: rgba(191, 219, 254, 1);
+  border: 1px solid rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+}
+
+.vacuum-controls {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.control-button {
+  flex: 1;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
+.control-button:disabled {
+  background: var(--bg-primary) !important;
+  color: var(--text-muted) !important;
+  cursor: not-allowed;
+}
+
+.control-button.start {
+  background: rgba(59, 130, 246, 0.2);
+  color: rgba(147, 197, 253, 1);
+}
+
+.control-button.start:hover:not(:disabled) {
+  background: rgba(59, 130, 246, 0.3);
+}
+
+.control-button.pause {
+  background: rgba(234, 179, 8, 0.2);
+  color: rgba(253, 224, 71, 1);
+}
+
+.control-button.pause:hover {
+  background: rgba(234, 179, 8, 0.3);
+}
+
+.control-button.home {
+  background: rgba(34, 197, 94, 0.2);
+  color: rgba(134, 239, 172, 1);
+}
+
+.control-button.home:hover {
+  background: rgba(34, 197, 94, 0.3);
+}
+
+/* Security Module Styles */
+.security-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.security-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  background: var(--bg-glass);
+  backdrop-filter: var(--blur-lg);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-xl);
+  transition: var(--transition-normal);
+}
+
+.security-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+.security-info {
+  flex: 1;
+}
+
+.security-name {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 var(--spacing-xs) 0;
+}
+
+.security-timestamp {
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.security-status {
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  min-width: 60px;
+  transition: var(--transition-fast);
+  letter-spacing: 0.5px;
+}
+
+.security-status.closed {
+  background: rgba(34, 197, 94, 0.15);
+  color: rgba(34, 197, 94, 0.9);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  backdrop-filter: var(--blur-sm);
+}
+
+.security-status.open {
+  background: rgba(234, 179, 8, 0.15);
+  color: rgba(234, 179, 8, 0.9);
+  border: 1px solid rgba(234, 179, 8, 0.2);
+  backdrop-filter: var(--blur-sm);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .rooms-icons-container {
+    gap: var(--spacing-sm);
+  }
+
+  .room-icon-item {
+    width: 40px;
+    height: 40px;
+  }
+
+  .room-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .temp-humidity-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .security-item {
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+
+  .security-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .security-name {
+    font-size: 14px;
+  }
+
+  .security-timestamp {
+    font-size: 12px;
+  }
+
+  .security-status {
+    font-size: 12px;
+    padding: var(--spacing-xs) var(--spacing-md);
+    min-width: 70px;
+  }
+}
