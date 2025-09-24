@@ -19,9 +19,6 @@ const LightModal: React.FC<LightModalProps> = ({
   entityState,
   onStateChange,
 }) => {
-  const [brightness, setBrightness] = useState<number>(50);
-  const [visualBrightness, setVisualBrightness] = useState<number>(50);
-  const [isDragging, setIsDragging] = useState<boolean>(false);
   const [selectedColor, setSelectedColor] = useState<string>("#eab308");
   const [activeTab, setActiveTab] = useState<
     "settings" | "color" | "temperature"
@@ -32,14 +29,7 @@ const LightModal: React.FC<LightModalProps> = ({
 
   // Update local state when entity state changes
   useEffect(() => {
-    if (entityState && !isDragging) {
-      const haBrightness = entityState.attributes.brightness;
-      if (haBrightness !== undefined && haBrightness !== null) {
-        const percentageBrightness = Math.round((haBrightness / 255) * 100);
-        setBrightness(percentageBrightness);
-        setVisualBrightness(percentageBrightness);
-      }
-
+    if (entityState) {
       // Update color from entity state
       const attributes = entityState.attributes;
       if (
@@ -51,7 +41,7 @@ const LightModal: React.FC<LightModalProps> = ({
         setSelectedColor(`rgb(${r}, ${g}, ${b})`);
       }
     }
-  }, [entityState, isDragging]);
+  }, [entityState]);
 
   // Function to get the light color from entity state
   const getLightColor = (): string => {
@@ -119,7 +109,7 @@ const LightModal: React.FC<LightModalProps> = ({
       if (isOn) {
         await homeAssistantAPI.turnOffLight(entityId);
       } else {
-        await homeAssistantAPI.turnOnLight(entityId, brightness);
+        await homeAssistantAPI.turnOnLight(entityId);
       }
       onStateChange();
     } catch (err) {
@@ -129,24 +119,6 @@ const LightModal: React.FC<LightModalProps> = ({
     }
   };
 
-  const handleBrightnessChange = (newBrightness: number) => {
-    setVisualBrightness(newBrightness);
-  };
-
-  const handleBrightnessCommit = async (newBrightness: number) => {
-    setBrightness(newBrightness);
-    if (isOn) {
-      try {
-        await homeAssistantAPI.setBrightness(entityId, newBrightness);
-        onStateChange();
-      } catch (err) {
-        console.error("Error changing brightness:", err);
-      }
-    }
-    setTimeout(() => {
-      setIsDragging(false);
-    }, 100);
-  };
 
   const handleColorChange = async (color: string) => {
     setSelectedColor(color);
@@ -207,9 +179,8 @@ const LightModal: React.FC<LightModalProps> = ({
           </button>
         </div>
 
-        {/* Brightness and Status */}
+        {/* Status */}
         <div className="light-modal-status">
-          <div className="light-modal-brightness">{visualBrightness}%</div>
           <div className="light-modal-timestamp">Hace 2 minutos</div>
         </div>
 
@@ -259,33 +230,8 @@ const LightModal: React.FC<LightModalProps> = ({
           {activeTab === "settings" && (
             <div className="light-modal-section">
               <div className="light-modal-section">
-                <button
-                  onClick={toggleLight}
-                  disabled={actionLoading}
-                  className={`light-modal-power-button ${isOn ? "on" : "off"}`}
-                >
-                  {isOn ? "Apagar" : "Encender"}
-                </button>
+                {/* Settings content can be added here if needed */}
               </div>
-              {isOn && (
-                <div className="light-modal-section">
-                  <div className="light-modal-label">Brillo</div>
-                  <input
-                    type="range"
-                    min="1"
-                    max="100"
-                    value={visualBrightness}
-                    onChange={(e) =>
-                      handleBrightnessChange(Number(e.target.value))
-                    }
-                    onMouseDown={() => setIsDragging(true)}
-                    onMouseUp={(e) =>
-                      handleBrightnessCommit(Number(e.currentTarget.value))
-                    }
-                    className="light-modal-slider"
-                  />
-                </div>
-              )}
             </div>
           )}
 
